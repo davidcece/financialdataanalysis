@@ -1,0 +1,134 @@
+﻿@model IEnumerable<FinancialDataAnalysis.Models.Asset>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-volitility-tab" data-bs-toggle="tab" data-bs-target="#nav-volitility"
+                type="button" role="tab" aria-controls="nav-volitility" aria-selected="true">
+            Volatility
+        </button>
+        <button class="nav-link" id="nav-correlations-tab" data-bs-toggle="tab" data-bs-target="#nav-correlations"
+                type="button" role="tab" aria-controls="nav-correlations" aria-selected="false">
+            Correlations
+        </button>
+        <button class="nav-link" id="nav-returns-tab" data-bs-toggle="tab" data-bs-target="#nav-returns"
+                type="button" role="tab" aria-controls="nav-returns" aria-selected="false">
+            Returns
+        </button>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+    @*Volitility Content*@
+    <div class="tab-pane fade show active" id="nav-volitility" role="tabpanel" aria-labelledby="nav-volitility-tab">
+        <br />
+        <h4>Select Asset to calculate it's volitility</h4>
+        <form id="volitility-form">
+            <select name="assetName">
+                <option value="-1">--Select asset--</option>
+                @foreach (var assetName in ViewBag.AssetNames)
+                {
+                    <option value="@assetName">@assetName</option>
+                }
+            </select>
+
+            <label>Start Date</label>
+            <input type="date" name="startDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <label>End Date</label>
+            <input type="date" name="endDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <input class="btn btn-outline-primary" type="submit" id="btn-submit-volitility" value="Calculate Volitility" />
+
+
+            <div id="volitility-data"></div>
+            <div class="chart-container">
+                <canvas id="volitility-chart"></canvas>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="tab-pane fade" id="nav-correlations" role="tabpanel" aria-labelledby="nav-correlations-tab">
+        <br />
+        <h4>Select two Asset to see their correlations</h4>
+        <form id="correlations-form">
+            <select name="assetName">
+                <option value="-1">--Select asset--</option>
+                @foreach (var assetName in ViewBag.AssetNames)
+                {
+                    <option value="@assetName">@assetName</option>
+                }
+            </select>
+
+            <select name="asset2Name">
+                <option value="-1">--Select asset--</option>
+                @foreach (var assetName in ViewBag.AssetNames)
+                {
+                    <option value="@assetName">@assetName</option>
+                }
+            </select>
+
+            <label>Start Date</label>
+            <input type="date" name="startDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <label>End Date</label>
+            <input type="date" name="endDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <input class="btn btn-outline-primary" type="submit" id="btn-submit-correlations" value="Calculate Correlations" />
+
+
+            <div id="correlations-data"></div>
+            <div class="chart-container">
+                <canvas id="correlations-chart"></canvas>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="tab-pane fade" id="nav-returns" role="tabpanel" aria-labelledby="nav-returns-tab">
+        <br />
+        <h4>Select Asset to get its returns</h4>
+        <form id="returns-form">
+            <select name="assetName">
+                <option value="-1">--Select asset--</option>
+                @foreach (var assetName in ViewBag.AssetNames)
+                {
+                    <option value="@assetName">@assetName</option>
+                }
+            </select>
+
+            <input type="number" name="amount" placeholder="Amount invested" />
+
+            <label>Start Date</label>
+            <input type="date" name="startDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <label>End Date</label>
+            <input type="date" name="endDate" min="@ViewBag.MinDate" max="@ViewBag.MaxDate" />
+
+            <input class="btn btn-outline-primary" type="submit" id="btn-submit-returns" value="Calculate Returns" />
+
+
+            <div id="returns-data"></div>
+            <div class="chart-container">
+                <canvas id="returns-chart"></canvas>
+            </div>
+
+        </form>
+    </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
