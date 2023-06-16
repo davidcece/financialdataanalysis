@@ -4,21 +4,12 @@ namespace FinancialDataAnalysis.Models
 {
     public class DbContext : IDbContext
     {
-        private List<Asset> _assets;
+        private readonly List<Asset> _assets;
 
-        public DbContext()
-        {
-            string stockPricesFile = "stock_prices_latest.csv";
-            string[] lines = File.ReadAllLines(stockPricesFile);
-            init(lines);
-        }
+        public DbContext() : this(File.ReadAllLines("stock_prices_latest.csv")) { }
+
 
         public DbContext(string[] lines)
-        {
-            init(lines);
-        }
-
-        private void init(string[] lines)
         {
             lines=lines.Skip(1).ToArray();
             _assets = new List<Asset>();
@@ -29,6 +20,7 @@ namespace FinancialDataAnalysis.Models
                 _assets.Add(asset);
             }
         }
+
 
         public int AssetCount()
         {

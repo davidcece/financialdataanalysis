@@ -51,6 +51,20 @@ EBAY,5/16/2016,50.8,51.96,50.75,51.83,49.7013,20032017,1";
         }
 
         [Test]
+        public void GetMinimumDateShouldReturnSept182000()
+        {
+            string expected = "2001-09-18";
+            Assert.That(_dbContext.GetMinDate(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetMaximumDateShouldReturnMay162016()
+        {
+            string expected = "2016-05-16";
+            Assert.That(_dbContext.GetMaxDate(), Is.EqualTo(expected));
+        }
+
+        [Test]
         public void CorrelationValueMustBeBetweenMinus1and1()
         {
             List<decimal> values1 = new() { 1, 2, 3, 4, 5, 6 };
