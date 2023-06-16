@@ -55,9 +55,7 @@ namespace FinancialDataAnalysis.Models
                                         .OrderBy(a => a.Date);
 
             var closingAdjacents = selectedAssets.Select(x => x.CloseAdjusted).ToList();
-            int n = closingAdjacents.Count;
-            var stdDev = GetStdDev(closingAdjacents);
-            var volitility = stdDev * (decimal)Math.Sqrt(n);
+            var volitility = GetVolitility(closingAdjacents);
             var graphData = GetGraphData(selectedAssets);
 
             return new MainResponse(volitility, graphData);
@@ -111,6 +109,7 @@ namespace FinancialDataAnalysis.Models
         }
 
 
+
         private GraphData GetGraphData(IOrderedEnumerable<Asset> assets)
         {
             List<string> dates = assets.Select(a => a.Date.ToString("yyyy-MM-dd")).ToList();
@@ -127,6 +126,15 @@ namespace FinancialDataAnalysis.Models
             return graphData;
         }
 
+
+        public static decimal GetVolitility(List<decimal> closing)
+        {
+            int n = closing.Count;
+            var stdDev = GetStdDev(closing);
+            var volitility = stdDev * (decimal)Math.Sqrt(n);
+            return Math.Round(volitility, 2);
+        }
+
         public static decimal GetStdDev(List<decimal> items)
         {
             decimal mean = items.Average();
@@ -134,7 +142,6 @@ namespace FinancialDataAnalysis.Models
             decimal varience = sumDeviations/items.Count;
             return (decimal)Math.Sqrt((double)varience);
         }
-
 
         public static decimal GetCorrelations(List<decimal> values1, List<decimal> values2)
         {

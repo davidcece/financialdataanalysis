@@ -42,6 +42,14 @@ EBAY,5/16/2016,50.8,51.96,50.75,51.83,49.7013,20032017,1";
             Assert.IsTrue(assetNames.Contains("MSFT"));
         }
 
+
+        [Test]
+        public void AssetGetAssertByNameReturns4Items()
+        {
+            var assets = _dbContext.GetAssetsByName("MSFT");
+            Assert.That(assets.Count, Is.EqualTo(4));
+        }
+
         [Test]
         public void CorrelationValueMustBeBetweenMinus1and1()
         {
